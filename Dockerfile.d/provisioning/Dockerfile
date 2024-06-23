@@ -71,18 +71,18 @@ RUN :\
   && echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main"\
   | tee -a /etc/apt/sources.list.d/hashicorp.list\
   && :
-RUN :\
-  && : Add the APT Repositories [Microsoft Azure]\
-  # See https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-linux?pivots=apt
-  && curl --fail --silent --show-error --location https://packages.microsoft.com/keys/microsoft.asc\
-  | gpg --no-default-keyring --keyring /usr/share/keyrings/microsoft-keyring.gpg --import -\
-  && echo\
-  "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/microsoft-keyring.gpg] https://packages.microsoft.com/repos/azure-cli/ $(lsb_release -cs) main"\
-  | tee /etc/apt/sources.list.d/azure-cli.list > /dev/null\
-  && echo\
-  "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/microsoft-keyring.gpg] https://packages.microsoft.com/repos/microsoft-ubuntu-$(lsb_release -cs)-prod/ $(lsb_release -cs) main"\
-  | tee /etc/apt/sources.list.d/microsoft-debian-prod.list > /dev/null\
-  && :
+# RUN :\
+#   && : Add the APT Repositories [Microsoft Azure]\
+#   # See https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-linux?pivots=apt
+#   && curl --fail --silent --show-error --location https://packages.microsoft.com/keys/microsoft.asc\
+#   | gpg --no-default-keyring --keyring /usr/share/keyrings/microsoft-keyring.gpg --import -\
+#   && echo\
+#   "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/microsoft-keyring.gpg] https://packages.microsoft.com/repos/azure-cli/ $(lsb_release -cs) main"\
+#   | tee /etc/apt/sources.list.d/azure-cli.list > /dev/null\
+#   && echo\
+#   "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/microsoft-keyring.gpg] https://packages.microsoft.com/repos/microsoft-ubuntu-$(lsb_release -cs)-prod/ $(lsb_release -cs) main"\
+#   | tee /etc/apt/sources.list.d/microsoft-debian-prod.list > /dev/null\
+#   && :
 RUN :\
   && : Install Packages from Added Repositories\
   && apt-get update\
@@ -90,10 +90,10 @@ RUN :\
   && apt-get install --assume-yes 1password-cli\
   # Ansible
   && apt-get install --assume-yes ansible\
-  # Azure CLI
-  && apt-get install --assume-yes azure-cli\
-  # && apt-get install --assume-yes powershell\
-  # && pwsh -c 'Install-Module -AllowClobber -Force -Name Az'\
+  # # Azure CLI
+  # && apt-get install --assume-yes azure-cli\
+  # # && apt-get install --assume-yes powershell\
+  # # && pwsh -c 'Install-Module -AllowClobber -Force -Name Az'\
   # Docker
   && apt-get install --assume-yes containerd.io docker-ce docker-ce-cli docker-compose-plugin\
   # Google Cloud

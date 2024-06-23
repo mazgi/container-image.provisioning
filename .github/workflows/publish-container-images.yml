@@ -4,26 +4,11 @@ on:
   push:
   workflow_dispatch:
 
-env:
-  DOCKER_BUILDKIT: 1
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Install pkgs
-        timeout-minutes: 1
-        run: |
-          sudo apt-get install --assume-yes --no-install-recommends zsh
       - uses: actions/checkout@v4
-      - uses: docker/setup-qemu-action@v3
-      - uses: docker/setup-buildx-action@v3
-      #
-      # Login - ghcr.io
-      - name: Login to ghcr.io
-        run: |
-          echo ${{ secrets.GITHUB_TOKEN }}\
-           | docker login ghcr.io --username ${{ github.repository_owner }} --password-stdin
       #
       # Generate the docker tag prefix with the registry - ghcr.io
       - name: Generate tag prefix for ghcr.io
@@ -39,38 +24,51 @@ jobs:
         if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
         run: |
           echo TAG_SUFFIX="$(date +%Y%m-)${GITHUB_SHA::7}" >> $GITHUB_ENV
-      
+      #
+      # Set up the Docker build environment
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Login to ghcr.io
+        uses: docker/login-action@v3
+        with:
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      #
       # Build the images
       # See also:
       #   - https://docs.docker.com/reference/cli/docker/buildx/build/#output
       #   - https://docs.docker.com/reference/cli/docker/buildx/build/#platform
       #   - https://docs.docker.com/build/ci/github-actions/multi-platform/#distribute-build-across-multiple-runners
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: user/app:latest
+
       - name: Build and push the image if the git-refs is the default(main) branch
         if: github.ref == 'refs/heads/main'
         timeout-minutes: 180
-        shell: zsh {0}
-        run: |
-          docker buildx build\
-           --platform=linux/amd64,linux/arm64\
-           --push\
-           --tag=${REGISTRY_PREFIX}/provisioning:latest\
-           Dockerfile.d/provisioning/
+        with:
+          context: Dockerfile.d/provisioning/
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ env.REGISTRY_PREFIX }}/provisioning:latest
       - name: Build and push the image if the git-refs starts with a version tag
         if: startsWith(github.ref, 'refs/tags/v')
         timeout-minutes: 180
-        shell: zsh {0}
-        run: |
-          docker buildx build\
-           --platform=linux/amd64,linux/arm64\
-           --push\
-           --tag=${REGISTRY_PREFIX}/provisioning:${TAG_SUFFIX}\
-           Dockerfile.d/provisioning/
+        with:
+          context: Dockerfile.d/provisioning/
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ env.REGISTRY_PREFIX }}/provisioning:${{ env.TAG_SUFFIX }}
       - name: If the git-refs isn't the default branch or doesn't start with a version tag, just build only the image
         if: ${{ github.ref != 'refs/heads/main' && !startsWith(github.ref, 'refs/tags/v') }}
         timeout-minutes: 180
-        shell: zsh {0}
-        run: |
-          docker buildx build\
-           --output=type=image,name=null.invalid/provisioning:latest,push=false\
-           --platform=linux/amd64,linux/arm64\
-           Dockerfile.d/provisioning/
+        with:
+          context: Dockerfile.d/provisioning/
+          platforms: linux/amd64,linux/arm64
+          push: false
+          tags: null.invalid/provisioning:latest

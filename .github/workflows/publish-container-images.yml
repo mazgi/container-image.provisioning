@@ -34,7 +34,7 @@ jobs:
       - name: Generate the docker tag suffix using the git tag
         if: startsWith(github.ref, 'refs/tags/v')
         run: |
-          echo TAG_SUFFIX="${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+          echo TAG_SUFFIX="${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
       - name: Generate the docker tag suffix using the current date
         if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
         run: |

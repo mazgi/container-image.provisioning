@@ -29,7 +29,7 @@ jobs:
         # https://zsh.sourceforge.io/Guide/zshguide05.html#l124
         run: |
           _SERVICES=($(docker compose config --services))
-          echo "service-list-json=[\"${(j.",".)_SERVICES}\"] >> $GITHUB_OUTPUT
+          echo "service-list-json=[\"${(j.",".)_SERVICES}\"]" >> $GITHUB_OUTPUT
       - run: |
           echo '${{ steps.get-service-list.outputs.service-list-json }}' | jq .
 

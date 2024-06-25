@@ -1,7 +1,7 @@
 # container-image.provisioning
 
-[![publish-container-images](https://github.com/mazgi/container-image.provisioning/actions/workflows/publish-container-images.yml/badge.svg)](https://github.com/mazgi/container-image.provisioning/actions/workflows/publish-container-images.yml)
-[![start-stop-containers](https://github.com/mazgi/container-image.provisioning/actions/workflows/start-stop-containers.yml/badge.svg)](https://github.com/mazgi/container-image.provisioning/actions/workflows/start-stop-containers.yml)
+[![publish-container-images](https://github.com/mazgi/container-image.provisioning/actions/workflows/publish-container-images.yaml/badge.svg)](https://github.com/mazgi/container-image.provisioning/actions/workflows/publish-container-images.yaml)
+[![start-stop-containers](https://github.com/mazgi/container-image.provisioning/actions/workflows/start-stop-containers.yaml/badge.svg)](https://github.com/mazgi/container-image.provisioning/actions/workflows/start-stop-containers.yaml)
 
 ## How to Use
 

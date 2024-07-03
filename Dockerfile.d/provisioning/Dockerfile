@@ -82,7 +82,7 @@ RUN echo 'apt::install-recommends "false";' > /etc/apt/apt.conf.d/no-install-rec
   && echo\
   "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/microsoft-keyring.gpg] https://packages.microsoft.com/repos/microsoft-ubuntu-$(lsb_release -cs)-prod/ $(lsb_release -cs) main"\
   | tee /etc/apt/sources.list.d/microsoft-debian-prod.list > /dev/null\
-  && :
+# && :
 # RUN :\
   && : Install Packages from Added Repositories\
   && apt-get update\

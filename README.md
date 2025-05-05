@@ -1,7 +1,10 @@
 # container-image.provisioning
 
-[![publish-container-images](https://github.com/mazgi/container-image.provisioning/actions/workflows/publish-container-images.yaml/badge.svg)](https://github.com/mazgi/container-image.provisioning/actions/workflows/publish-container-images.yaml)
 [![start-stop-containers](https://github.com/mazgi/container-image.provisioning/actions/workflows/start-stop-containers.yaml/badge.svg)](https://github.com/mazgi/container-image.provisioning/actions/workflows/start-stop-containers.yaml)
+
+Language|Build Status|Container Images
+---|---|---
+provisioning|[![provisioning](https://github.com/mazgi/container-image.provisioning/actions/workflows/provisioning.yaml/badge.svg)](https://github.com/mazgi/container-image.provisioning/actions/workflows/provisioning.yaml)|[ghcr.io/mazgi/provisioning](https://github.com/mazgi/container-image.provisioning/pkgs/container/provisioning)
 
 ## How to Use
 

@@ -9,7 +9,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 ARG TARGETARCH
 ARG TARGETPLATFORM
 # https://www.terraform.io/downloads.html
-ARG TERRAFORM_VERSIONS=1.8.5,1.2.5,1.2.2,1.2.1,1.1.8,1.1.7,1.1.6,1.0.6,0.15.5
+ARG TERRAFORM_VERSIONS=1.11.4,1.10.5,1.9.8,1.8.5,1.2.5,1.2.2,1.2.1,1.1.8,1.1.7,1.1.6,1.0.6,0.15.5
 
 RUN echo 'apt::install-recommends "false";' > /etc/apt/apt.conf.d/no-install-recommends\
   && apt-get update\

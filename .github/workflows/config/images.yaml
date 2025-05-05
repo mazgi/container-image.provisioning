@@ -1,0 +1,11 @@
+images:
+  provisioning:
+    image_version_arg_key: _TERRAFORM_VERSION
+    versions:
+      - version: "1"
+        latest: true
+    architectures:
+      - platform: linux/amd64
+        runner: ubuntu-24.04
+      - platform: linux/arm64
+        runner: ubuntu-24.04-arm

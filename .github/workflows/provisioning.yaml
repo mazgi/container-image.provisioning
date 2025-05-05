@@ -1,4 +1,4 @@
-name: node-webapp.development
+name: provisioning
 
 env:
   IMAGE_BASENAME: ${{ github.workflow }}
@@ -7,8 +7,8 @@ on:
   push:
     paths:
       - ".github/workflows/**"
-      - "code-stubs/node-webapp/**"
-      - "Dockerfile.d/node-webapp.development/**"
+      - "code-stubs/provisioning/**"
+      - "Dockerfile.d/provisioning/**"
   workflow_dispatch:
 
 jobs:

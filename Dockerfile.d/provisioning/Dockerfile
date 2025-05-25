@@ -29,6 +29,13 @@ RUN echo 'apt::install-recommends "false";' > /etc/apt/apt.conf.d/no-install-rec
   && apt-get install --assume-yes software-properties-common\
 #   && :
 # RUN :\
+  && : Install packages related K8s\
+  && apt install google-cloud-cli-gke-gcloud-auth-plugin\
+  # https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
+  && curl -o /usr/local/bin/kubectl -L "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/${TARGETARCH}/kubectl"\
+  && chmod a+x /usr/local/bin/kubectl\
+#   && :
+# RUN :\
   && : Add the APT Repository [1Password CLI]\
   # See https://developer.1password.com/docs/cli/get-started/
   && curl --fail --silent --show-error --location https://downloads.1password.com/linux/keys/1password.asc\

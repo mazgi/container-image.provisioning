@@ -27,14 +27,14 @@ RUN echo 'apt::install-recommends "false";' > /etc/apt/apt.conf.d/no-install-rec
   && apt-get install --assume-yes vim\
   && apt-get install --assume-yes nodejs npm\
   && apt-get install --assume-yes software-properties-common\
-  && :
-RUN :\
+#   && :
+# RUN :\
   && : Install packages related K8s\
   # https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
   && curl -o /usr/local/bin/kubectl -L "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/${TARGETARCH}/kubectl"\
   && chmod a+x /usr/local/bin/kubectl\
-  && :
-RUN :\
+#   && :
+# RUN :\
   && : Add the APT Repository [1Password CLI]\
   # See https://developer.1password.com/docs/cli/get-started/
   && curl --fail --silent --show-error --location https://downloads.1password.com/linux/keys/1password.asc\
@@ -90,8 +90,8 @@ RUN :\
   && echo\
   "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/microsoft-keyring.gpg] https://packages.microsoft.com/repos/microsoft-ubuntu-$(lsb_release -cs)-prod/ $(lsb_release -cs) main"\
   | tee /etc/apt/sources.list.d/microsoft-debian-prod.list > /dev/null\
-&& :
-RUN :\
+# && :
+# RUN :\
   && : Install Packages from Added Repositories\
   && apt-get update\
   # 1Password CLI
@@ -105,10 +105,9 @@ RUN :\
   # Docker
   && apt-get install --assume-yes containerd.io docker-ce docker-ce-cli docker-compose-plugin\
   # Google Cloud
-  && apt-get install --assume-yes google-cloud-sdk\
-  && apt-get install --assume-yes google-cloud-sdk-gke-gcloud-auth-plugin\
-  && :
-RUN :\
+  && apt-get install --assume-yes google-cloud-sdk google-cloud-sdk-gke-gcloud-auth-plugin\
+#   && :
+# RUN :\
   && : Install AWS CLI v2 for ${TARGETARCH}\
   && test "${TARGETARCH}" = "amd64" && curl --output /tmp/awscliv2.zip --fail --silent --show-error --location "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" || : NOP\
   && test "${TARGETARCH}" = "arm64" && curl --output /tmp/awscliv2.zip --fail --silent --show-error --location "https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip" || : NOP\

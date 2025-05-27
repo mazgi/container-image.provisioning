@@ -33,6 +33,10 @@ RUN echo 'apt::install-recommends "false";' > /etc/apt/apt.conf.d/no-install-rec
   # https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
   && curl -o /usr/local/bin/kubectl -L "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/${TARGETARCH}/kubectl"\
   && chmod a+x /usr/local/bin/kubectl\
+  # https://helm.sh/docs/intro/install/#from-script
+  && curl -fsSL -o /tmp/get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3\
+  && chmod 700 /tmp/get_helm.sh\
+  && /tmp/get_helm.sh\
 #   && :
 # RUN :\
   && : Add the APT Repository [1Password CLI]\
